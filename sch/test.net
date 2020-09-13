@@ -1,0 +1,9 @@
+* D:\Dropbox\Electronica y ciencia\PLL\sch\test.asc
+XU1 Vout Vin Vout opamp Aol=100K GBW=10Meg
+V Vin 0 1V
+R1 Vout Vout 10k
+R2 Vout 0 10k
+.lib opamp.sub
+.tran .002m
+.backanno
+.end

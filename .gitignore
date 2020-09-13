@@ -1,0 +1,13 @@
+bak/**
+*.STA
+*.ccspjt
+*.cof
+*.err
+*.lst
+*.mcp
+*.mcw
+*.mptags
+*.tagsrc
+*.sym
+*.tre
+articulo.txt

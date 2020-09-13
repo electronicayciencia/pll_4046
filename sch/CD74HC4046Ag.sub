@@ -1,0 +1,60 @@
+* CD74HCT4046Ag phase-lock loop with VCO
+* Model by Geoff Western (aka Alec_t)
+
+.SUBCKT CD74HC4046Ag C1a C1b Compin Inh R1 R2 SigIn VCOin Vdd Vss Dem PC1out PC2out PC3out PhaseOut VCOout
+A1 N004 e 0 0 0 0 N007 0 SCHMITT vt=0 vh=1m td=10n
+A2 CompIn e 0 0 0 0 N012 0 SCHMITT vt=0 vh=1m td=10n
+A6 0 N007 0 N012 0 N016 N013 0 XOR
+S3 PhaseOut Vdd N006 0 ms
+S4 0 PhaseOut N003 0 ms
+S1 PC2out Vdd N002 0 ms
+S2 0 PC2out N005 0 ms
+S5 PC1out Vdd N013 0 ms
+S6 0 PC1out N016 0 ms
+R2 Vdd e 500k
+R3 e 0 500k
+A7 0 N002 0 N005 0 N006 N003 0 OR
+A4 0 N007 0 N012 0 0 N009 0 AND td=20n
+A3 Vdd 0 N007 0 N009 0 N002 0 DFLOP
+A5 Vdd 0 N012 0 N009 0 N005 0 DFLOP
+M3 R2 R2 N001 N001 mp2
+M6 N008 R2 N001 N001 mp2
+M4 R2 VCOin R1 R1 mn2
+A11 N015 N014 0 0 0 N019 N021 0 SRFLOP td=10n
+A9 C1a e 0 0 0 0 N014 0 SCHMITT vt=0 vh=1m td=10n
+A10 C1b e 0 0 0 0 N015 0 SCHMITT vt=0 vh=1m td=10n
+M5 N017 VCOin Dem Dem mn3
+S13 compin Vdd N010 0 ms
+S14 0 compin N011 0 ms
+S8 N017 Vdd ni 0 ms
+S7 N001 Vdd ni 0 ms
+A8 0 e 0 0 0 ni 0 0 SCHMITT vt=0 vh=1m td=10n
+S9 C1a N008 N010 0 ms
+S10 0 C1a N011 0 ms
+S11 C1b N008 N011 0 ms
+S12 0 C1b N010 0 ms
+D1 0 C1a D
+D2 0 C1b D
+A12 0 N019 0 ni 0 0 N011 0 AND
+A13 0 N021 0 ni 0 0 N010 0 AND
+R4 e 0 10Meg
+M2 N004 SigIn 0 0 mn1
+M1 N004 SigIn Vdd Vdd mp1
+R1 N004 SigIn 250k
+A14 N022 N023 0 0 0 N018 N020 0 SRFLOP td=10n
+A15 N007 0 0 0 N018 0 N022 0 AND
+A16 N012 0 0 0 N020 0 N023 0 AND
+S15 PC3out Vdd N020 0 ms
+S16 0 PC3out N018 0 ms
+.model D D
+.lib standard.dio
+.model NMOS NMOS
+.model PMOS PMOS
+.lib standard.mos
+.model ms sw(ron=100 roff=1e7 vt=.5 vh=0)
+.model mn2 nmos(vto=1 kp=1 Rd=5)
+.model mp2 pmos(vto=-1 kp=1)
+.model mp1 pmos(vto=-1 kp=6e-5)
+.model mn1 nmos(vto=1 kp=6e-5)
+.model mn3 nmos(vto=1.65 kp=1 Rd=5)
+.ENDS CD74HC4046Ag
