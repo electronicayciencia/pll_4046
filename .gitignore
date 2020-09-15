@@ -6,6 +6,7 @@ bak/**
 *.lst
 *.mcp
 *.mcw
+*.mcs
 *.mptags
 *.tagsrc
 *.sym
