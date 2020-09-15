@@ -73,11 +73,19 @@ void main() {
 
 	while (true) {
 		if (!input(BUTTON1) || !input(BUTTON2))
-			delay_ms(20); // lazy debouncer
+			delay_ms(DEBOUNCE_WAIT);
 		
 		if (!input(BUTTON1)) {
 			decrease_div();
-			delay_ms(500);
+			
+			// Wait 500 ms with button pressed to run
+			for (int i = 0; i < 50; i++) {
+				delay_ms(10);
+				if (input(BUTTON1)) {
+					delay_ms(DEBOUNCE_WAIT);
+					break;
+				}
+			}
 			
 			while(!input(BUTTON1)) {
 				decrease_div();
@@ -87,15 +95,20 @@ void main() {
 		
 		else if (!input(BUTTON2)) {
 			increase_div();
-			delay_ms(500);
+			
+			for (int i = 0; i < 50; i++) {
+				delay_ms(10);
+				if (input(BUTTON2)) {
+					delay_ms(DEBOUNCE_WAIT);
+					break;
+				}
+			}
 			
 			while(!input(BUTTON2)) {
 				increase_div();
 				delay_ms(50);
 			}
 		}
-		
-		delay_ms(10);
 	}
 }
 
